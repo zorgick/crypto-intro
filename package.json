@@ -123,6 +123,7 @@
       "@typescript-eslint/no-non-null-assertion": "off",
       "consistent-return": "off",
       "default-case": "off",
+      "no-debugger": "warn",
       "max-len": [
         "error",
         {

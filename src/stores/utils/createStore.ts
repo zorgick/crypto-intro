@@ -4,6 +4,7 @@ import {
   RootStore,
   RootStoreModel,
   RootStoreEnv,
+  BlockMainStore,
 } from 'src/stores/models';
 
 import {
@@ -13,7 +14,11 @@ import {
 export type InstantiatedStoresType = typeof InstantiatedStoresBox;
 export type InstantiatedBusStoresType = typeof InstantiatedBusStores;
 
-export const InstantiatedStoresBox = {};
+const blockMainStoreInstance = BlockMainStore.create();
+
+export const InstantiatedStoresBox = {
+  blockMainStore: blockMainStoreInstance,
+};
 
 export const InstantiatedBusStores = {};
 
