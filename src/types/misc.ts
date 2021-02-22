@@ -7,3 +7,10 @@ export type ParamsWithErrorOptions = {
 };
 
 export type GeneralParams = Record<string, any>;
+
+export type ResponseErrorType = {
+  error?: {
+    code: number;
+    message: string;
+  };
+}
