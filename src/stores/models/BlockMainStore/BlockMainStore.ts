@@ -87,7 +87,7 @@ export const BlockMainStore = types
           latest: true,
         });
         self.setSelectedBlock(blockId);
-        // self.blocks.get(blockId)!.formatTransactions(result.transactions);
+        self.blocks.get(blockId)!.formatTransactions(result.transactions);
       } catch (error) {
         const { message } = identifyError(error);
         self.blockLoadingError = message;

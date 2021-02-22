@@ -1,11 +1,19 @@
 import {
   types,
   Instance,
+  cast,
 } from 'mobx-state-tree';
 
 import {
+  ResponseBlockTransactionType,
+} from 'src/types';
+import {
   UniqueIdStore,
 } from 'src/stores/models';
+
+import {
+  Transaction,
+} from './index';
 
 export type UniqueBlockStoreModel = Instance<typeof UniqueBlockStore>
 
@@ -16,9 +24,20 @@ export const UniqueBlockStore = types
       id: types.identifier,
       blockHexNumber: types.optional(types.string, ''),
       blockHash: types.optional(types.string, ''),
+      transactions: types.optional(types.array(Transaction), []),
     }))
   .views((self) => ({
     get blockNumber() {
       return parseInt(self.blockHexNumber, 16);
+    },
+  }))
+  .actions((self) => ({
+    formatTransactions(transactions: ResponseBlockTransactionType[]) {
+      self.transactions = cast(transactions.map(({ hash, from, to }) => ({
+        id: self.generateUniqueId(),
+        hash,
+        from,
+        to,
+      })));
     },
   }));

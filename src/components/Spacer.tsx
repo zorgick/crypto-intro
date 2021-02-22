@@ -9,7 +9,7 @@ import {
 
 import {
   SpacerHook,
-} from './styles';
+} from 'src/components/styles/spacer.styles';
 
 export const Spacer: FC<SpacerProps> = ({ text }) => {
   if (!text) {

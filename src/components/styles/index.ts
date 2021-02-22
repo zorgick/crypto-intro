@@ -1,5 +1,4 @@
 export * from './loader.styles';
-export * from './spacer.styles';
 export * from './intro.styles';
 export * from './appHeader.styles';
 export * from './commonCard.styles';
