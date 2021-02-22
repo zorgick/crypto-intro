@@ -11,14 +11,38 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import {
   Loader,
+  Spacer,
 } from 'src/components';
+import {
+  injectDependencies,
+} from 'src/utils';
+import {
+  RootStoreModel,
+  UniqueBlockStoreModel,
+} from 'src/stores';
 
 import {
   BlockCardHook,
   CommonCardHook,
 } from 'src/components/styles';
 
+const mapStore = ({ blockMainStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
+  isBlockLoading: blockMainStore.isBlockLoading,
+  isLatestBlock: blockMainStore.isLatestBlock,
+  blockLoadingError: blockMainStore.blockLoadingError,
+  blockNumber: blockStore?.blockNumber,
+  blockHash: blockStore?.blockHash,
+});
+
 export const BlockCard: FC = observer(() => {
+  const {
+    isBlockLoading,
+    isLatestBlock,
+    blockLoadingError,
+    blockNumber,
+    blockHash,
+  } = injectDependencies(mapStore);
+
   const CommonCardClasses = CommonCardHook.useCommonCardStyles();
   const CommonCardContentClasses = CommonCardHook.useCommonCardContentStyles();
   const BlockCardTextClasses = BlockCardHook.useBlockCardTextStyles();
@@ -31,18 +55,24 @@ export const BlockCard: FC = observer(() => {
 
   return (
     <Card elevation={4} classes={CommonCardClasses}>
-      <Loader loading={false}>
+      <Loader
+        loading={isBlockLoading}
+        stubComponent={blockLoadingError && <Spacer text={blockLoadingError} />}
+      >
         <CardContent classes={CommonCardContentClasses}>
           <Box className={BlockCardTextClasses.header}>
-            <Typography variant="h4" component="h2">Block number details</Typography>
-            <Chip
-              label="latest"
-              color="secondary"
-              size="small"
-            />
+            <Typography variant="h4" component="h2">{`Block #${blockNumber} details`}</Typography>
+            {isLatestBlock
+              && (
+                <Chip
+                  label="latest"
+                  color="secondary"
+                  size="small"
+                />
+              )}
           </Box>
           <Box className={BlockCardTextClasses.body}>
-            <Typography variant="body1" noWrap>hash</Typography>
+            <Typography variant="body1" noWrap>{blockHash}</Typography>
             <IconButton
               onClick={handleClickCopy}
               onMouseDown={handleMouseDownCopy}

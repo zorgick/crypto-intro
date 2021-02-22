@@ -9,21 +9,42 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 import {
   Loader,
+  Spacer,
 } from 'src/components';
+import {
+  injectDependencies,
+} from 'src/utils';
+import {
+  RootStoreModel,
+} from 'src/stores';
 
 import {
   CommonCardHook,
   BlockNavigationHook,
 } from 'src/components/styles';
 
+const mapStore = ({ blockMainStore }: RootStoreModel) => ({
+  isBlockLoading: blockMainStore.isBlockLoading,
+  blockLoadingError: blockMainStore.blockLoadingError,
+  isLatestBlock: blockMainStore.isLatestBlock,
+});
+
 export const BlockNavigation: FC = observer(() => {
+  const {
+    isBlockLoading,
+    blockLoadingError,
+    isLatestBlock,
+  } = injectDependencies(mapStore);
   const CommonCardClasses = CommonCardHook.useCommonCardStyles();
   const ButtonGroupClasses = BlockNavigationHook.useButtonGroupStyles();
   const ButtonClasses = BlockNavigationHook.useButtonStyles();
 
   return (
     <Card elevation={4} classes={CommonCardClasses}>
-      <Loader loading={false}>
+      <Loader
+        loading={isBlockLoading}
+        stubComponent={blockLoadingError && <Spacer text={blockLoadingError} />}
+      >
         <ButtonGroup
           size="large"
           color="secondary"
@@ -36,14 +57,14 @@ export const BlockNavigation: FC = observer(() => {
           >
             Previous block
           </Button>
-          {true
+          {!isLatestBlock
             && (
-            <Button
-              endIcon={<SkipNextIcon />}
-              classes={ButtonClasses}
-            >
-              Next block
-            </Button>
+              <Button
+                endIcon={<SkipNextIcon />}
+                classes={ButtonClasses}
+              >
+                Next block
+              </Button>
             )}
         </ButtonGroup>
       </Loader>

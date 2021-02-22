@@ -7,12 +7,25 @@ import {
   AppHeader,
   AppBody,
 } from 'src/components';
-
+import {
+  RootStoreModel,
+  useInject,
+} from 'src/stores';
+import {
+  BlockContext,
+} from 'src/utils';
 import {
   IntroHook,
 } from 'src/components/styles';
 
+const mapStore = ({ blockMainStore }: RootStoreModel) => ({
+  selectedBlock: blockMainStore.selectedBlock,
+});
+
 export const IntroComponent: FC = observer(() => {
+  const {
+    selectedBlock,
+  } = useInject(mapStore);
   const BodyClasses = IntroHook.useBodyStyles();
 
   return (
@@ -22,8 +35,10 @@ export const IntroComponent: FC = observer(() => {
       maxWidth="lg"
       disableGutters
     >
-      <AppHeader />
-      <AppBody />
+      <BlockContext.Provider value={{ blockId: selectedBlock }}>
+        <AppHeader />
+        <AppBody />
+      </BlockContext.Provider>
     </Container>
   );
 });
