@@ -1,3 +1,4 @@
+export * from './Spacer';
 export * from './Loader';
 export * from './ProtoField';
 export * from './BlockCard';

@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = '/api/';
-
 axios.interceptors.request.use(
   (config) => config,
   (error) => Promise.reject(error),

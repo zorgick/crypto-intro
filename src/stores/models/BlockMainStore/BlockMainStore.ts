@@ -91,7 +91,6 @@ export const BlockMainStore = types
       } catch (error) {
         const { message } = identifyError(error);
         self.blockLoadingError = message;
-        throw new Error(message);
       } finally {
         self.isBlockLoading = false;
       }

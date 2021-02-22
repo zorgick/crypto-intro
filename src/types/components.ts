@@ -28,3 +28,11 @@ export type ProtoFieldProps = {
   startAdornment?: InputProps['startAdornment'],
   inputProps?: InputProps,
 };
+
+export type SpacerProps = {
+  text: string;
+};
+
+export type BlockContextType = {
+  blockId: string;
+};
