@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run types-check && git-branch-is -r "^((feature/FRONT-|bugfix/FRONT-)(\d+\.)*\d+)$"
