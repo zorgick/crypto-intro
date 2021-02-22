@@ -4,6 +4,8 @@ import {
 } from './index';
 
 export type ResponseBlockType = ResponseErrorType & {
+  jsonrpc: string;
+  id: number;
   result: {
     difficulty: string;
     extraData: string;
@@ -46,3 +48,4 @@ export type ResponseBlockTransactionType = {
 };
 
 export type RequestGetBlockInfo = (params?: { number?: string; } & ParamsWithErrorOptions) => Promise<ResponseBlockType>;
+export type ParamsGetBlockInfoType = Parameters<RequestGetBlockInfo>[number];
