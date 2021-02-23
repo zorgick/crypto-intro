@@ -3,8 +3,8 @@ export const validateNumbersOnly = (str: string | number) => {
   if (strInput.length === 0) {
     strInput = '';
   }
-  const match = strInput.match(/^(?:-1|\d*)/g);
-  if (match?.length) {
+  const match = strInput.match(/^(-1?|[1-9]*)/g);
+  if (match && match.length > 0) {
     strInput = match[0];
   }
   return strInput;

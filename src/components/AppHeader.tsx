@@ -12,12 +12,31 @@ import SearchIcon from '@material-ui/icons/Search';
 import {
   ProtoField,
 } from 'src/components';
+import {
+  injectDependencies,
+} from 'src/utils';
+import {
+  RootStoreModel,
+} from 'src/stores';
 
 import {
   AppHeaderHook,
 } from 'src/components/styles';
 
+const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
+  hasFields: blockExplorerStore.blockSearchField.hasFields,
+  fieldIds: blockExplorerStore.blockSearchField.fieldIds,
+  fieldGroup: blockExplorerStore.blockSearchField.fieldGroup,
+  changeField: blockExplorerStore.blockSearchField.innerChangeField,
+});
+
 export const AppHeader: FC = observer(() => {
+  const {
+    hasFields,
+    fieldIds,
+    fieldGroup,
+    changeField,
+  } = injectDependencies(mapStore);
   const AppBarClasses = AppHeaderHook.useAppBarStyles();
   const ToolBarClasses = AppHeaderHook.useToolBarStyles();
   const InputSearchClasses = AppHeaderHook.useInputSearchStyles();
@@ -46,29 +65,25 @@ export const AppHeader: FC = observer(() => {
       <AppBar position="fixed" classes={AppBarClasses}>
         <Toolbar classes={ToolBarClasses}>
           <Typography variant="h1">Ethereum explorer</Typography>
-          <ProtoField
-            field={{
-              id: '1',
-              label: 'Block number',
-              singleValue: '',
-              disabled: false,
-              helperText: 'Type -1 to get the latest block',
-              placeholder: '-1',
-            }}
-            changeField={() => 0}
-            inputProps={{ classes: InputSearchClasses }}
-            endAdornment={(
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickSearch}
-                  onMouseDown={handleMouseDownSearch}
-                  size="small"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            )}
-          />
+          {hasFields && fieldIds.map(([id]: string[]) => (
+            <ProtoField
+              key={id}
+              field={fieldGroup.get(id)!}
+              changeField={changeField}
+              inputProps={{ classes: InputSearchClasses }}
+              endAdornment={(
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickSearch}
+                    onMouseDown={handleMouseDownSearch}
+                    size="small"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              )}
+            />
+          ))}
         </Toolbar>
       </AppBar>
     </>
