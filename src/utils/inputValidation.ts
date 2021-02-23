@@ -3,9 +3,13 @@ export const validateNumbersOnly = (str: string | number) => {
   if (strInput.length === 0) {
     strInput = '';
   }
-  const match = strInput.match(/^(-1?|[1-9]*)/g);
-  if (match && match.length > 0) {
-    strInput = match[0];
+  const match = strInput.match(/^(-1?|[1-9]\d*)/g);
+
+  console.log(match);
+  if (match) {
+    strInput = match![0];
+  } else {
+    strInput = '';
   }
   return strInput;
 };

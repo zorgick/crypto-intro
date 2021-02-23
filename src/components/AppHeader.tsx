@@ -25,17 +25,19 @@ import {
 
 const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
   hasFields: blockExplorerStore.blockSearchField.hasFields,
-  fieldIds: blockExplorerStore.blockSearchField.fieldIds,
+  searchBlockId: blockExplorerStore.blockSearchField.searchBlockId,
   fieldGroup: blockExplorerStore.blockSearchField.fieldGroup,
   changeField: blockExplorerStore.blockSearchField.innerChangeField,
+  searchBlock: blockExplorerStore.blockSearchField.searchBlock,
 });
 
 export const AppHeader: FC = observer(() => {
   const {
     hasFields,
-    fieldIds,
+    searchBlockId,
     fieldGroup,
     changeField,
+    searchBlock,
   } = injectDependencies(mapStore);
   const AppBarClasses = AppHeaderHook.useAppBarStyles();
   const ToolBarClasses = AppHeaderHook.useToolBarStyles();
@@ -45,7 +47,13 @@ export const AppHeader: FC = observer(() => {
     event.preventDefault();
   };
 
-  const handleClickSearch = () => 0;
+  const handleClickSearch = () => searchBlock();
+
+  const handleKeyPressSearch = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      searchBlock();
+    }
+  };
 
   return (
     <>
@@ -65,25 +73,28 @@ export const AppHeader: FC = observer(() => {
       <AppBar position="fixed" classes={AppBarClasses}>
         <Toolbar classes={ToolBarClasses}>
           <Typography variant="h1">Ethereum explorer</Typography>
-          {hasFields && fieldIds.map(([id]: string[]) => (
-            <ProtoField
-              key={id}
-              field={fieldGroup.get(id)!}
-              changeField={changeField}
-              inputProps={{ classes: InputSearchClasses }}
-              endAdornment={(
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={handleClickSearch}
-                    onMouseDown={handleMouseDownSearch}
-                    size="small"
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              )}
-            />
-          ))}
+          {hasFields
+            && (
+              <ProtoField
+                field={fieldGroup.get(searchBlockId)!}
+                changeField={changeField}
+                inputProps={{ classes: InputSearchClasses }}
+                textFieldProps={{
+                  onKeyPress: handleKeyPressSearch,
+                }}
+                endAdornment={(
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleClickSearch}
+                      onMouseDown={handleMouseDownSearch}
+                      size="small"
+                    >
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )}
+              />
+            )}
         </Toolbar>
       </AppBar>
     </>

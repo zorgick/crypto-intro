@@ -8,6 +8,9 @@ import {
   UniqueIdStore,
   BlockExplorerStoreModel,
 } from 'src/stores/models';
+import {
+  utcTime,
+} from 'src/utils';
 
 import {
   UniqueBlockStore,
@@ -65,6 +68,7 @@ export const BlockMainStore = types
         id: uniqueId,
         blockHexNumber,
         blockHash,
+        requestTime: utcTime(new Date()),
       });
       return uniqueId;
     },

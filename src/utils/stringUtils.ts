@@ -1,6 +1,6 @@
 export const truncate = (str: string, length: number, separator = '...') => {
   if (!str) {
-    return '';
+    return '-';
   } if (str.length <= length) {
     return str;
   }

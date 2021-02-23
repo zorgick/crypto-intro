@@ -10,9 +10,6 @@ import {
 import {
   UniqueIdStore,
 } from 'src/stores/models';
-import {
-  utcTime,
-} from 'src/utils';
 
 import {
   Transaction,
@@ -27,7 +24,7 @@ export const UniqueBlockStore = types
       id: types.identifier,
       blockHexNumber: types.optional(types.string, ''),
       blockHash: types.optional(types.string, ''),
-      requestTime: types.optional(types.string, utcTime(new Date())),
+      requestTime: types.optional(types.string, ''),
       transactions: types.optional(types.array(Transaction), []),
     }))
   .views((self) => ({
@@ -40,9 +37,9 @@ export const UniqueBlockStore = types
       if (self.transactions.length === 0) {
         self.transactions = cast(transactions.map(({ hash, from, to }) => ({
           id: self.generateUniqueId(),
-          hash,
-          from,
-          to,
+          hash: hash || '',
+          from: from || '',
+          to: to || '',
         })));
       }
     },

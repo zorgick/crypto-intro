@@ -80,6 +80,7 @@ export const BlockExplorerStore = types
         const blockId = self.blockMain.createBlockEntry({
           blockHexNumber: result.number,
           blockHash: result.hash,
+          latest: params!.number === '-1',
         });
         self.selectedBlock = blockId;
         self.blockMain.blocks.get(blockId)!.formatTransactions(result.transactions);
