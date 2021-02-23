@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
-const axios = require('axios');
+const fetch = require('node-fetch');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -13,13 +13,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/block/latest', async (_, res) => {
   try {
-    const { data } = await axios({
+    const response = await fetch('https://cloudflare-eth.com', {
       method: 'POST',
-      url: 'https://cloudflare-eth.com',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
       },
-      data: {
+      body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'eth_getBlockByNumber',
         params: [
@@ -27,8 +26,10 @@ app.get('/api/block/latest', async (_, res) => {
           true,
         ],
         id: 1,
-      },
+      }),
     });
+    const data = await response.json();
+
     res.send(data);
   } catch (err) {
     res.send(err);
@@ -47,13 +48,12 @@ app.get('/api/block/:number', async (req, res) => {
     }
     console.log('Requested number is %s, in hex it is %s', req.params.number, hexBlockNumber);
 
-    const { data, status } = await axios({
+    const response = await fetch('https://cloudflare-eth.com', {
       method: 'POST',
-      url: 'https://cloudflare-eth.com',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
       },
-      data: {
+      body: JSON.stringify({
         jsonrpc: '2.0',
         method: 'eth_getBlockByNumber',
         params: [
@@ -61,9 +61,10 @@ app.get('/api/block/:number', async (req, res) => {
           true,
         ],
         id: 1,
-      },
+      }),
     });
-    console.log('Response status is ', status);
+    const data = await response.json();
+    console.log('Response status is ', response.status);
     console.log('Response Block number is %s \n', data.result.number);
     res.send(data);
   } catch (err) {

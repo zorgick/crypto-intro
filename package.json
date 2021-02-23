@@ -33,6 +33,7 @@
     "mobx-react-lite": "^3.2.0",
     "mobx-state-tree": "^5.0.1",
     "mst-storebooster": "^1.0.0",
+    "node-fetch": "^2.6.1",
     "random-string": "^0.2.0",
     "react-helmet": "^6.1.0",
     "react-scripts": "4.0.2"
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.13",
     "@babel/core": "^7.12.13",
+    "@types/node-fetch": "^2.5.8",
     "@types/random-string": "0.0.28",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
