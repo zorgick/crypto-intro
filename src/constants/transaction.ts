@@ -3,7 +3,8 @@ export const TRANSACTIONS_COLUMNS = [
     field: 'hash',
     headerName: 'Txn',
     sortable: false,
-    flex: 1,
+    filterable: false,
+    flex: 3,
   },
   {
     field: 'from',
@@ -17,4 +18,4 @@ export const TRANSACTIONS_COLUMNS = [
     sortable: false,
     flex: 1,
   },
-] as const;
+];

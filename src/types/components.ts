@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { TextFieldProps } from '@material-ui/core/TextField';
 import { InputLabelClassKey } from '@material-ui/core/InputLabel';
 import { InputProps } from '@material-ui/core/Input';
+import { CellParams } from '@material-ui/data-grid';
 
 export type LoaderProps = {
   loading: boolean;
@@ -35,4 +36,8 @@ export type SpacerProps = {
 
 export type BlockContextType = {
   blockId: string;
+};
+
+export type TransactionCellProps = {
+  params: CellParams;
 };
