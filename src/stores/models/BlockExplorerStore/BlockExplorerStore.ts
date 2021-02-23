@@ -21,6 +21,7 @@ import {
 
 import {
   BlockMainStore,
+  BlockSearchFieldStore,
 } from './index';
 
 export type BlockExplorerStoreModel = Instance<typeof BlockExplorerStore>
@@ -34,6 +35,7 @@ export const BlockExplorerStore = types
       blockLoadingError: types.optional(types.string, ''),
       selectedBlock: types.optional(types.string, ''),
       blockMain: types.optional(BlockMainStore, {}),
+      blockSearchField: types.optional(BlockSearchFieldStore, {}),
     }))
   .views((self) => ({
     get isLatestBlock() {
@@ -103,5 +105,6 @@ export const BlockExplorerStore = types
     }),
     afterCreate() {
       self.loadLatestBlock({});
+      self.blockSearchField.generateField();
     },
   }));
