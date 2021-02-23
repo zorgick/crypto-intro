@@ -124,6 +124,7 @@
       "consistent-return": "off",
       "default-case": "off",
       "no-debugger": "warn",
+      "prefer-destructuring": "off",
       "max-len": [
         "error",
         {

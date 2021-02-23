@@ -17,12 +17,32 @@ export const FormField = types
     helperText: types.maybe(types.string),
     singleValue: types.optional(types.string, ''),
   })
+  .volatile(() => ({
+    inputValidatorFunc: undefined as any,
+  }))
   .actions((self) => ({
+    updateFieldInitialDefinitions({
+      inputValidatorFunc,
+    }: {
+      inputValidatorFunc?: (input: string) => string;
+    }) {
+      if (inputValidatorFunc) {
+        self.inputValidatorFunc = inputValidatorFunc;
+      }
+    },
     setValue(selected?: string) {
       if (self.error) {
         self.error = '';
       }
-      self.singleValue = selected ? `${selected}` : '';
+      if (selected) {
+        if (typeof self.inputValidatorFunc === 'function') {
+          self.singleValue = self.inputValidatorFunc(selected);
+        } else {
+          self.singleValue = `${selected}`;
+        }
+      } else {
+        self.singleValue = '';
+      }
     },
     toggleDisabled(disabled: boolean) {
       self.disabled = disabled;
