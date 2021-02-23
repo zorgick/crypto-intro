@@ -8,6 +8,9 @@ export const getLatestBlockInfo: RequestGetBlockInfo = async ({ errorOptions } =
     const { data }: AxiosResponse<ResponseBlockType> = await axios({
       method: 'GET',
       url: '/api/block/latest',
+      params: {
+        tmsp: `${new Date().getTime()}`,
+      },
     });
 
     if (!data || data.error) {
@@ -25,6 +28,9 @@ export const getBlockInfo: RequestGetBlockInfo = async ({ number, errorOptions }
     const { data }: AxiosResponse<ResponseBlockType> = await axios({
       method: 'GET',
       url: `/api/block/${number}`,
+      params: {
+        tmsp: `${new Date().getTime()}`,
+      },
     });
 
     if (!data || data.error) {

@@ -45,9 +45,9 @@ app.get('/api/block/:number', async (req, res) => {
     } else {
       throw new Error('Block number was not provided or is not a valid integer');
     }
-    console.log('number is %s, hexNumber is %s', req.params.number, hexBlockNumber);
+    console.log('Requested number is %s, in hex it is %s', req.params.number, hexBlockNumber);
 
-    const { data } = await axios({
+    const { data, status } = await axios({
       method: 'POST',
       url: 'https://cloudflare-eth.com',
       header: {
@@ -63,6 +63,8 @@ app.get('/api/block/:number', async (req, res) => {
         id: 1,
       },
     });
+    console.log('Response status is ', status);
+    console.log('Response Block number is %s \n', data.result.number);
     res.send(data);
   } catch (err) {
     res.send(err);
