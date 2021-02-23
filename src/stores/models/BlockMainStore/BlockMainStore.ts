@@ -6,6 +6,7 @@ import {
 
 import {
   UniqueIdStore,
+  CopyFactoryStore,
 } from 'src/stores/models';
 import {
   ResponseBlockType,
@@ -27,6 +28,7 @@ export type BlockMainStoreModel = Instance<typeof BlockMainStore>
 export const BlockMainStore = types
   .compose('BlockMainStore',
     UniqueIdStore,
+    CopyFactoryStore,
     types.model({
       isBlockLoading: types.optional(types.boolean, false),
       latestBlockId: types.optional(types.string, ''),
@@ -40,6 +42,19 @@ export const BlockMainStore = types
     },
   }))
   .actions((self) => ({
+    truncate(str: string, length: number, separator = '...') {
+      if (!str) {
+        return '';
+      } if (str.length <= length) {
+        return str;
+      }
+
+      const pad = Math.round(length - separator.length) / 2;
+      const start = str.substr(0, pad);
+      const end = str.substr(str.length - pad);
+
+      return [start, separator, end].join('');
+    },
     createBlockEntry({
       blockHexNumber,
       blockHash,

@@ -33,11 +33,13 @@ export const UniqueBlockStore = types
   }))
   .actions((self) => ({
     formatTransactions(transactions: ResponseBlockTransactionType[]) {
-      self.transactions = cast(transactions.map(({ hash, from, to }) => ({
-        id: self.generateUniqueId(),
-        hash,
-        from,
-        to,
-      })));
+      if (self.transactions.length === 0) {
+        self.transactions = cast(transactions.map(({ hash, from, to }) => ({
+          id: self.generateUniqueId(),
+          hash,
+          from,
+          to,
+        })));
+      }
     },
   }));

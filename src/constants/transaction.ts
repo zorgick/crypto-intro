@@ -1,10 +1,13 @@
-export const TRANSACTIONS_COLUMNS = [
+import { ColDef } from '@material-ui/data-grid';
+
+export const TRANSACTIONS_COLUMNS: ColDef[] = [
   {
     field: 'hash',
     headerName: 'Txn',
     sortable: false,
     filterable: false,
     flex: 3,
+    disableColumnMenu: true,
   },
   {
     field: 'from',
