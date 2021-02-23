@@ -19,9 +19,9 @@ import {
   TransactionCell,
 } from 'src/components';
 
-const mapStore = ({ blockMainStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
-  isBlockLoading: blockMainStore.isBlockLoading,
-  blockLoadingError: blockMainStore.blockLoadingError,
+const mapStore = ({ blockExplorerStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
+  isBlockLoading: blockExplorerStore.isBlockLoading,
+  blockLoadingError: blockExplorerStore.blockLoadingError,
   transactions: blockStore?.transactions,
 });
 

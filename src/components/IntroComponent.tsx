@@ -18,8 +18,8 @@ import {
   IntroHook,
 } from 'src/components/styles';
 
-const mapStore = ({ blockMainStore }: RootStoreModel) => ({
-  selectedBlock: blockMainStore.selectedBlock,
+const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
+  selectedBlock: blockExplorerStore.selectedBlock,
 });
 
 export const IntroComponent: FC = observer(() => {

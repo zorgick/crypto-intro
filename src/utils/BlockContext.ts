@@ -15,7 +15,8 @@ export const injectDependencies = <T>(mapStore: MapStoreType<T>) => {
   const { blockId } = useContext(BlockContext);
   return useInject(
     mapStore,
-    ({ blockMainStore }: RootStoreModel) => blockMainStore
+    ({ blockExplorerStore }: RootStoreModel) => blockExplorerStore
+      .blockMain
       .blocks
       .get(blockId),
   );

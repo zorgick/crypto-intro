@@ -26,11 +26,11 @@ import {
   CommonCardHook,
 } from 'src/components/styles';
 
-const mapStore = ({ blockMainStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
-  isBlockLoading: blockMainStore.isBlockLoading,
-  isLatestBlock: blockMainStore.isLatestBlock,
-  blockLoadingError: blockMainStore.blockLoadingError,
-  copyValue: blockMainStore.copyValue,
+const mapStore = ({ blockExplorerStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
+  isBlockLoading: blockExplorerStore.isBlockLoading,
+  isLatestBlock: blockExplorerStore.isLatestBlock,
+  blockLoadingError: blockExplorerStore.blockLoadingError,
+  copyValue: blockExplorerStore.copyValue,
   blockNumber: blockStore?.blockNumber,
   blockHash: blockStore?.blockHash,
 });

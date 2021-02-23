@@ -8,6 +8,8 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import {
   injectDependencies,
+
+  truncate,
 } from 'src/utils';
 import {
   RootStoreModel,
@@ -16,15 +18,13 @@ import {
   TransactionCellProps,
 } from 'src/types';
 
-const mapStore = ({ blockMainStore }: RootStoreModel) => ({
-  copyValue: blockMainStore.copyValue,
-  truncate: blockMainStore.truncate,
+const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
+  copyValue: blockExplorerStore.copyValue,
 });
 
 export const TransactionCell: FC<TransactionCellProps> = observer(({ params: { value } }) => {
   const {
     copyValue,
-    truncate,
   } = injectDependencies(mapStore);
 
   const handleMouseDownCopy = (event: React.MouseEvent) => {

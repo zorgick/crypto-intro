@@ -1,4 +1,4 @@
 export * from './BaseModels';
-export * from './BlockMainStore';
+export * from './BlockExplorerStore';
 // must be the last export
 export * from './RootStoreModel';

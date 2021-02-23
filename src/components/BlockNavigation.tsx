@@ -23,10 +23,10 @@ import {
   BlockNavigationHook,
 } from 'src/components/styles';
 
-const mapStore = ({ blockMainStore }: RootStoreModel) => ({
-  isBlockLoading: blockMainStore.isBlockLoading,
-  blockLoadingError: blockMainStore.blockLoadingError,
-  isLatestBlock: blockMainStore.isLatestBlock,
+const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
+  isBlockLoading: blockExplorerStore.isBlockLoading,
+  blockLoadingError: blockExplorerStore.blockLoadingError,
+  isLatestBlock: blockExplorerStore.isLatestBlock,
 });
 
 export const BlockNavigation: FC = observer(() => {
