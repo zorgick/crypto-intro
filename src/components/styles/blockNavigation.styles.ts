@@ -16,9 +16,17 @@ export const BlockNavigationHook = {
     name: 'BlockNavigationButtonGroup',
   }),
   useButtonStyles: makeStyles((theme) => ({
+    textSizeLarge: {
+      [theme.breakpoints.down('md')]: {
+        fontSize: '0.7rem',
+      },
+    },
     iconSizeLarge: {
       '& > *:first-child': {
         fontSize: '84px',
+        [theme.breakpoints.down('md')]: {
+          fontSize: '56px',
+        },
       },
     },
     textSecondary: {

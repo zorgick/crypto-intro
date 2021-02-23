@@ -10,6 +10,9 @@ import {
 import {
   UniqueIdStore,
 } from 'src/stores/models';
+import {
+  utcTime,
+} from 'src/utils';
 
 import {
   Transaction,
@@ -24,6 +27,7 @@ export const UniqueBlockStore = types
       id: types.identifier,
       blockHexNumber: types.optional(types.string, ''),
       blockHash: types.optional(types.string, ''),
+      requestTime: types.optional(types.string, utcTime(new Date())),
       transactions: types.optional(types.array(Transaction), []),
     }))
   .views((self) => ({

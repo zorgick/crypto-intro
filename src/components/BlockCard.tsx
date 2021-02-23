@@ -33,6 +33,7 @@ const mapStore = ({ blockExplorerStore }: RootStoreModel, blockStore: UniqueBloc
   copyValue: blockExplorerStore.copyValue,
   blockNumber: blockStore?.blockNumber,
   blockHash: blockStore?.blockHash,
+  requestTime: blockStore?.requestTime,
 });
 
 export const BlockCard: FC = observer(() => {
@@ -43,6 +44,7 @@ export const BlockCard: FC = observer(() => {
     copyValue,
     blockNumber,
     blockHash,
+    requestTime,
   } = injectDependencies(mapStore);
 
   const CommonCardClasses = CommonCardHook.useCommonCardStyles();
@@ -72,6 +74,11 @@ export const BlockCard: FC = observer(() => {
                   size="small"
                 />
               )}
+            <Chip
+              label={requestTime}
+              color="default"
+              size="small"
+            />
           </Box>
           <Box className={BlockCardTextClasses.body}>
             <Typography variant="body1" noWrap>{blockHash}</Typography>
