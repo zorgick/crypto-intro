@@ -27,6 +27,7 @@ const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
   isBlockLoading: blockExplorerStore.isBlockLoading,
   blockLoadingError: blockExplorerStore.blockLoadingError,
   isLatestBlock: blockExplorerStore.isLatestBlock,
+  changeBlock: blockExplorerStore.changeBlock,
 });
 
 export const BlockNavigation: FC = observer(() => {
@@ -34,10 +35,21 @@ export const BlockNavigation: FC = observer(() => {
     isBlockLoading,
     blockLoadingError,
     isLatestBlock,
+    changeBlock,
   } = injectDependencies(mapStore);
   const CommonCardClasses = CommonCardHook.useCommonCardStyles();
   const ButtonGroupClasses = BlockNavigationHook.useButtonGroupStyles();
   const ButtonClasses = BlockNavigationHook.useButtonStyles();
+
+  const handleNextClick = () => {
+    if (!isLatestBlock) {
+      changeBlock('forward');
+    }
+  };
+
+  const handlePreviosClick = () => {
+    changeBlock('backward');
+  };
 
   return (
     <Card elevation={4} classes={CommonCardClasses}>
@@ -54,6 +66,7 @@ export const BlockNavigation: FC = observer(() => {
           <Button
             startIcon={<SkipPreviousIcon />}
             classes={ButtonClasses}
+            onClick={handlePreviosClick}
           >
             Previous block
           </Button>
@@ -62,6 +75,7 @@ export const BlockNavigation: FC = observer(() => {
               <Button
                 endIcon={<SkipNextIcon />}
                 classes={ButtonClasses}
+                onClick={handleNextClick}
               >
                 Next block
               </Button>

@@ -22,6 +22,21 @@ export const BlockMainStore = types
       blocks: types.optional(types.map(UniqueBlockStore), {}),
     }))
   .actions((self) => ({
+    checkRelativeEntry(currentBlock: string, relativePosition: 'forward' | 'backward') {
+      let relativeEntryId = '';
+      const currentBlockNumber = parseInt(currentBlock.substring(
+        0,
+        currentBlock.indexOf('&'),
+      ), 10);
+      const relativeBlockNumberStringified = `${currentBlockNumber + (relativePosition === 'forward' ? 1 : -1)}`;
+      if (self.uniqueIds.has(relativeBlockNumberStringified)) {
+        relativeEntryId = self.uniqueIds.get(relativeBlockNumberStringified)!.uniqueId;
+      }
+      return {
+        relativeBlockId: relativeEntryId,
+        relativeBlockNumber: relativeBlockNumberStringified,
+      };
+    },
     createBlockEntry({
       blockHexNumber,
       blockHash,
@@ -31,13 +46,14 @@ export const BlockMainStore = types
       blockHash: string;
       latest?: boolean;
     }) {
+      const blockNumberStringified = `${parseInt(blockHexNumber, 16)}`;
       // do not generate a new block in the store if the block number
       // already exists in the store
-      if (self.uniqueIds.has(blockHexNumber)) {
-        return self.uniqueIds.get(blockHexNumber)!.uniqueId;
+      if (self.uniqueIds.has(blockNumberStringified)) {
+        return self.uniqueIds.get(blockNumberStringified)!.uniqueId;
       }
 
-      const uniqueId = self.generateUniqueId(blockHexNumber);
+      const uniqueId = self.generateUniqueId(blockNumberStringified);
 
       // this affects view and logic scenarios
       if (latest) {

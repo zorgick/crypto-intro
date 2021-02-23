@@ -90,6 +90,17 @@ export const BlockExplorerStore = types
     }),
   }))
   .actions((self) => ({
+    changeBlock: flow(function* changeBlock(direction: 'forward' | 'backward') {
+      const { relativeBlockId, relativeBlockNumber } = self.blockMain.checkRelativeEntry(
+        self.selectedBlock,
+        direction,
+      );
+      if (relativeBlockId) {
+        self.selectedBlock = relativeBlockId;
+      } else {
+        yield self.loadBlockNumber({ number: relativeBlockNumber });
+      }
+    }),
     afterCreate() {
       self.loadLatestBlock({});
     },

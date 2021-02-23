@@ -45,6 +45,7 @@ app.get('/api/block/:number', async (req, res) => {
     } else {
       throw new Error('Block number was not provided or is not a valid integer');
     }
+    console.log('number is %s, hexNumber is %s', req.params.number, hexBlockNumber);
 
     const { data } = await axios({
       method: 'POST',
