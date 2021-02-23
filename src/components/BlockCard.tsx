@@ -30,6 +30,7 @@ const mapStore = ({ blockMainStore }: RootStoreModel, blockStore: UniqueBlockSto
   isBlockLoading: blockMainStore.isBlockLoading,
   isLatestBlock: blockMainStore.isLatestBlock,
   blockLoadingError: blockMainStore.blockLoadingError,
+  copyValue: blockMainStore.copyValue,
   blockNumber: blockStore?.blockNumber,
   blockHash: blockStore?.blockHash,
 });
@@ -39,6 +40,7 @@ export const BlockCard: FC = observer(() => {
     isBlockLoading,
     isLatestBlock,
     blockLoadingError,
+    copyValue,
     blockNumber,
     blockHash,
   } = injectDependencies(mapStore);
@@ -51,7 +53,7 @@ export const BlockCard: FC = observer(() => {
     event.preventDefault();
   };
 
-  const handleClickCopy = () => 0;
+  const handleClickCopy = () => copyValue(blockHash);
 
   return (
     <Card elevation={4} classes={CommonCardClasses}>

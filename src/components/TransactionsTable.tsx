@@ -3,54 +3,60 @@ import { observer } from 'mobx-react-lite';
 
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, CellParams } from '@material-ui/data-grid';
 
-export const TransactionTable: FC = observer(() => (
-  <Box marginTop="24px" height="400px">
-    <Paper elevation={4} style={{ height: '100%' }}>
-      <DataGrid
-        rowsPerPageOptions={[5, 10, 20]}
-        pageSize={5}
-        hideFooterSelectedRowCount
-        disableSelectionOnClick
-        rows={[
-          {
-            id: 1, hash: 'Snow', from: 'Jon', to: 35,
-          },
-          {
-            id: 2, hash: 'Lannister', from: 'Cersei', to: 42,
-          },
-          {
-            id: 3, hash: 'Lannister', from: 'Jaime', to: 45,
-          },
-          {
-            id: 4, hash: 'Stark', from: 'Arya', to: 16,
-          },
-          {
-            id: 5, hash: 'Targaryen', from: 'Daenerys', to: null,
-          },
-        ]}
-        columns={[
-          {
-            field: 'hash',
-            headerName: 'Txn',
-            sortable: false,
-            flex: 1,
-          },
-          {
-            field: 'from',
-            headerName: 'From',
-            sortable: false,
-            flex: 1,
-          },
-          {
-            field: 'to',
-            headerName: 'To',
-            sortable: false,
-            flex: 1,
-          },
-        ]}
-      />
-    </Paper>
-  </Box>
-));
+import { TRANSACTIONS_COLUMNS } from 'src/constants';
+import {
+  injectDependencies,
+} from 'src/utils';
+import {
+  RootStoreModel,
+  UniqueBlockStoreModel,
+} from 'src/stores';
+import {
+  Loader,
+  Spacer,
+  TransactionCell,
+} from 'src/components';
+
+const mapStore = ({ blockMainStore }: RootStoreModel, blockStore: UniqueBlockStoreModel) => ({
+  isBlockLoading: blockMainStore.isBlockLoading,
+  blockLoadingError: blockMainStore.blockLoadingError,
+  transactions: blockStore?.transactions,
+});
+
+export const TransactionTable: FC = observer(() => {
+  const {
+    isBlockLoading,
+    blockLoadingError,
+    transactions,
+  } = injectDependencies(mapStore);
+
+  return (
+    <Box marginTop="24px" height="700px">
+      <Paper elevation={4} style={{ height: '100%' }}>
+        <Loader
+          loading={isBlockLoading}
+          stubComponent={blockLoadingError && <Spacer text={blockLoadingError} />}
+        >
+          <DataGrid
+            rowsPerPageOptions={[10, 30, 60]}
+            pageSize={10}
+            hideFooterSelectedRowCount
+            disableSelectionOnClick
+            rows={transactions}
+            columns={TRANSACTIONS_COLUMNS.map((column) => {
+              if (column.field === 'from' || column.field === 'to') {
+                return {
+                  ...column,
+                  renderCell: (params: CellParams) => <TransactionCell params={params} />,
+                };
+              }
+              return column;
+            })}
+          />
+        </Loader>
+      </Paper>
+    </Box>
+  );
+});
