@@ -84,6 +84,15 @@ export const BlockExplorerStore = types
         });
         self.selectedBlock = blockId;
         self.blockMain.blocks.get(blockId)!.formatTransactions(result.transactions);
+        const requestedNumber = Number(params!.number);
+        const receivedNumber = parseInt(result.number, 16);
+        if (requestedNumber !== -1 && requestedNumber !== receivedNumber) {
+          throw new Error(
+            `There might be a problem in API service.
+            You requested for a block #${requestedNumber}, but received a block #${receivedNumber}.
+            Use search box to get another block.`,
+          );
+        }
       } catch (error) {
         const { message } = identifyError(error);
         self.blockLoadingError = message;
@@ -94,6 +103,9 @@ export const BlockExplorerStore = types
   }))
   .actions((self) => ({
     changeBlock: flow(function* changeBlock(direction: 'forward' | 'backward') {
+      if (self.blockLoadingError) {
+        self.blockLoadingError = '';
+      }
       const { relativeBlockId, relativeBlockNumber } = self.blockMain.checkRelativeEntry(
         self.selectedBlock,
         direction,

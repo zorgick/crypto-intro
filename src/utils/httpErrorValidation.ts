@@ -157,7 +157,7 @@ export const identifyError: IdentifyErrorType = (error, options) => {
       identifiedError.message = options?.badResponseError || options?.genericError || EMPTY_RESPONSE_ERROR;
       break;
     default:
-      identifiedError.message = UNKNOWN_ERROR;
+      identifiedError.message = error.message || UNKNOWN_ERROR;
   }
   return identifiedError;
 };

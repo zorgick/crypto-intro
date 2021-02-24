@@ -9,7 +9,6 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 import {
   Loader,
-  Spacer,
 } from 'src/components';
 import {
   injectDependencies,
@@ -25,7 +24,6 @@ import {
 
 const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
   isBlockLoading: blockExplorerStore.isBlockLoading,
-  blockLoadingError: blockExplorerStore.blockLoadingError,
   isLatestBlock: blockExplorerStore.isLatestBlock,
   changeBlock: blockExplorerStore.changeBlock,
 });
@@ -33,7 +31,6 @@ const mapStore = ({ blockExplorerStore }: RootStoreModel) => ({
 export const BlockNavigation: FC = observer(() => {
   const {
     isBlockLoading,
-    blockLoadingError,
     isLatestBlock,
     changeBlock,
   } = injectDependencies(mapStore);
@@ -55,7 +52,6 @@ export const BlockNavigation: FC = observer(() => {
     <Card elevation={4} classes={CommonCardClasses}>
       <Loader
         loading={isBlockLoading}
-        stubComponent={blockLoadingError && <Spacer text={blockLoadingError} />}
       >
         <ButtonGroup
           size="large"
