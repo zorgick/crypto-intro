@@ -1,3 +1,4 @@
+// @ts-ignore
 import React, { FC } from 'react';
 
 import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
