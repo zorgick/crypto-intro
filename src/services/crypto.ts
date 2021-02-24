@@ -13,7 +13,7 @@ export const getLatestBlockInfo: RequestGetBlockInfo = async ({ errorOptions } =
       },
     });
 
-    if (!data || data.error) {
+    if (!data || Reflect.ownKeys(data).length === 0 || data.error) {
       throw new Error(data.error?.message);
     }
 
@@ -33,7 +33,7 @@ export const getBlockInfo: RequestGetBlockInfo = async ({ number, errorOptions }
       },
     });
 
-    if (!data || data.error) {
+    if (!data || Reflect.ownKeys(data).length === 0 || data.error) {
       throw new Error(data.error?.message);
     }
 

@@ -20,7 +20,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true
   },

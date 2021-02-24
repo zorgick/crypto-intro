@@ -5,7 +5,6 @@ export const validateNumbersOnly = (str: string | number) => {
   }
   const match = strInput.match(/^(-1?|[1-9]\d*)/g);
 
-  console.log(match);
   if (match) {
     strInput = match![0];
   } else {
