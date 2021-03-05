@@ -1,6 +1,4 @@
-import { ColDef } from '@material-ui/data-grid';
-
-export const TRANSACTIONS_COLUMNS: ColDef[] = [
+export const TRANSACTIONS_COLUMNS: any[] = [
   {
     field: 'hash',
     headerName: 'Txn',

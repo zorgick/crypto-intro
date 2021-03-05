@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import { DataGrid, CellParams } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 
 import { TRANSACTIONS_COLUMNS } from 'src/constants';
 import {
@@ -49,7 +49,7 @@ export const TransactionTable: FC = observer(() => {
               if (column.field === 'from' || column.field === 'to') {
                 return {
                   ...column,
-                  renderCell: (params: CellParams) => <TransactionCell params={params} />,
+                  renderCell: (params: any) => <TransactionCell params={params} />,
                 };
               }
               return column;
